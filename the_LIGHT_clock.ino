@@ -75,7 +75,7 @@ void loop() {
     apretaronAlgo = ((buttonHs == 0) | (buttonMin == 0) | (buttonSwitcher == 0));
 
     if (apretaronAlgo & (currTimeout > 0)) {
-
+      currTimeout=timeout;
       //handling button input
 
       if (buttonSwitcher == 0)
