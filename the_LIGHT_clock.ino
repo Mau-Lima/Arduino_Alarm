@@ -174,7 +174,7 @@ void handleTimeRollover() {
 
   if (m == 60) {
     m = 0;
-    al_h++;
+    h++;
   }
 
   if (h == 24)
