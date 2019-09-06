@@ -18,7 +18,6 @@ void handleAlarmRollover();
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7); //addr, EN, RW, RS, D4, D5, D6, D7, BacklightPin, POLARITY
 
 const int relayPin = 8;
-const int relayState = 0;
 const int hsPin = 1; //el del boton del a hora!!
 const int minPin = 2; //el de los minuto!!
 const int switchPin = 3;
@@ -55,6 +54,8 @@ void setup() {
   lcd.setBacklight(HIGH); // Activamos el backlight
   now = millis();
   lcd.begin(16, 2);
+  pinMode(relayPin, OUTPUT);
+  digitalWrite(relayPin, HIGH);
 }
 
 void loop() {
@@ -121,6 +122,9 @@ void loop() {
 
   handleTimeRollover();
 
+  if (h == al_h && m == al_m)
+    alarmTime();
+
   //Backlight time out 
   if (currTimeout > 0)
     currTimeout--;
@@ -186,4 +190,23 @@ void handleAlarmRollover() {
   }
   if (al_h == 24)
     al_h = 0;
+}
+
+void alarmTime() { //this will ruin the timekeeping when the alarm is blaring but w/e
+  lcd.off();
+  apretaronAlgo = ((buttonHs == 0) | (buttonMin == 0) | (buttonSwitcher == 0));
+  while (!apretaronAlgo) {
+    digitalWrite(relayPin, LOW);
+    delay(2000);
+    for (int i = 0; i < 5; i++) {
+      digitalWrite(relayPin, LOW);
+      delay(200);
+      digitalWrite(relayPin, HIGH);
+      delay(200);
+    }
+
+    apretaronAlgo = ((buttonHs == 0) | (buttonMin == 0) | (buttonSwitcher == 0));
+  }
+
+  lcd.on();
 }
