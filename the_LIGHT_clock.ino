@@ -5,18 +5,17 @@
  *    GND = GND
  */
 #include <Wire.h>
-
 #include <LCD.h>
-
 #include <LiquidCrystal_I2C.h>
-
 void printHora(int hora, int minutos, int segundos);
 void screenrefresh();
 void handleTimeRollover();
 void handleAlarmRollover();
 
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7); //addr, EN, RW, RS, D4, D5, D6, D7, BacklightPin, POLARITY
 
+
+
+LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7); //addr, EN, RW, RS, D4, D5, D6, D7, BacklightPin, POLARITY
 const int relayPin = 8;
 const int hsPin = 1; //el del boton del a hora!!
 const int minPin = 2; //el de los minuto!!
@@ -24,14 +23,14 @@ const int switchPin = 3;
 
 const int timeout = 20; //segs
 
-// initial Time display is 12:59:45 PM
-int h = 12;
-int m = 59;
-int s = 45;
+// horas iniciales
+int h = 21;
+int m = 00;
+int s = 00;
 
-int al_h = 14;
-int al_m = 21;
-int al_s = 32;
+int al_h = 5;
+int al_m = 00;
+int al_s = 00;
 
 int currTimeout = timeout;
 
@@ -51,11 +50,10 @@ void setup() {
   pinMode(minPin, INPUT_PULLUP);
   pinMode(switchPin, INPUT_PULLUP);
   lcd.setBacklightPin(3, POSITIVE); // POSITIVE = enum definido en LCD.h
-  lcd.setBacklight(HIGH); // Activamos el backlight
   now = millis();
   lcd.begin(16, 2);
   pinMode(relayPin, OUTPUT);
-  digitalWrite(relayPin, HIGH);
+  digitalWrite(relayPin, HIGH); //high es apagado because reasons
 }
 
 void loop() {
