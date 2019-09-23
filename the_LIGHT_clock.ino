@@ -153,17 +153,16 @@ void printHora(int hora, int minutos, int segundos) {
 void screenrefresh() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Time: ");
+  lcd.print("T: ");
   printHora(h, m, s);
-  lcd.print(" ");
-  if (qCambia)
-    lcd.print("A");
-  else
-    lcd.print("T");
+  if (!qCambia)
+    lcd.print(" <-");
 
   lcd.setCursor(0, 1);
-  lcd.print("Alarma: ");
+  lcd.print("A: ");
   printHora(al_h, al_m, al_s);
+  if (qCambia)
+    lcd.print(" <-");
 }
 
 void handleTimeRollover() {
