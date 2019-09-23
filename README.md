@@ -9,4 +9,4 @@ Materials:
 • three buttons
 
 Schematic:
-!(Imagen)[https://github.com/Tostadora1/Arduino_Alarm/blob/master/arduino_light_bb.png?raw=true]
+![Imagen](https://github.com/Tostadora1/Arduino_Alarm/blob/master/arduino_light_bb.png?raw=true)
