@@ -53,7 +53,7 @@ void setup() {
   now = millis();
   lcd.begin(16, 2);
   pinMode(relayPin, OUTPUT);
-  digitalWrite(relayPin, HIGH); //high es apagado because reasons
+  digitalWrite(relayPin, LOW); //high es apagado because reasons || update: con mi nuevo rele de estado solido, low es apagado!
 }
 
 void loop() {
@@ -196,13 +196,13 @@ void handleAlarmRollover() {
 void alarmTime() { //this will ruin the timekeeping when the alarm is blaring but w/e
   lcd.off();
   apretaronAlgo = ((buttonHs == 0) | (buttonMin == 0) | (buttonSwitcher == 0));
-  while (!apretaronAlgo) {
-    digitalWrite(relayPin, LOW);
+  while (!apretaronAlgo) {//todos los high y low-s fueron invertidos cuando em cambie al SSR!
+    digitalWrite(relayPin, HIGH);
     delay(2000);
     for (int i = 0; i < 5; i++) {
-      digitalWrite(relayPin, LOW);
-      delay(200);
       digitalWrite(relayPin, HIGH);
+      delay(200);
+      digitalWrite(relayPin, LOW);
       delay(200);
     }
 
